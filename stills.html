@@ -8,13 +8,8 @@
         body { margin: 0; padding: 0; background: #000; color: #fff; font-family: sans-serif; overflow-x: hidden; }
         
         header { 
-            position: absolute; 
-            top: 0; left: 0; width: 100%;
-            text-align: center; 
-            padding: 40px 0; 
-            z-index: 999; 
-            background: linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%);
-            pointer-events: none; 
+            position: absolute; top: 0; left: 0; width: 100%; text-align: center; padding: 40px 0; z-index: 999; 
+            background: linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%); pointer-events: none; 
         }
         .glitch, nav a { pointer-events: auto; } 
         
@@ -25,32 +20,10 @@
         nav a { color: white; text-decoration: none; margin: 0 15px; font-size: 1.2rem; font-weight: 800; transition: 0.3s; font-family: 'Syne', sans-serif; text-shadow: 0 2px 5px rgba(0,0,0,0.8); }
         nav a:hover { color: #ff0000; }
 
-        .mosaic-grid { 
-            display: grid; 
-            grid-template-columns: repeat(5, 1fr); 
-            gap: 0; 
-            width: 100%;
-            padding: 0; 
-            margin: 0;
-        }
+        .mosaic-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; width: 100%; padding: 0; margin: 0; }
         
-        .item { 
-            aspect-ratio: 4 / 3; 
-            position: relative; 
-            overflow: hidden; 
-            background-color: #000;
-        }
-        
-        .item img { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover; 
-            transform: scale(1.06); 
-            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-            cursor: pointer;
-            display: block;
-        }
-        
+        .item { aspect-ratio: 4 / 3; position: relative; overflow: hidden; background-color: #000; }
+        .item img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.06); transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); cursor: pointer; display: block; }
         .item:hover img { transform: scale(1.15); }
 
         #lightbox { display: none; position: fixed; top:0; left:0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); z-index: 1000; align-items: center; justify-content: center; }
@@ -70,7 +43,7 @@
     <header>
         <h1 class="glitch" onclick="window.location.href='index.html'">PORTFOLIO</h1>
         <nav>
-            <a href="index.html" style="color:gray;">STILLS</a>
+            <a href="stills.html" style="color:gray;">STILLS</a>
             <a href="work.html">WORK</a>
             <a href="about.html">ABOUT</a>
             <a href="contact.html">CONTACT</a>
@@ -79,42 +52,52 @@
 
     <div class="mosaic-grid" id="grid">
         <div class="item"><img src="STILLS_00010_00000.jpg" onclick="openLB('STILLS_00010_00000.jpg')"></div>
+        <div class="item"><img src="Still 2026-08-14 160057_1.53.1_00000.jpg" onclick="openLB('Still 2026-08-14 160057_1.53.1_00000.jpg')"></div>
         <div class="item"><img src="STILLS_00019_00000.jpg" onclick="openLB('STILLS_00019_00000.jpg')"></div>
         <div class="item"><img src="3.jpg" onclick="openLB('3.jpg')"></div>
         <div class="item"><img src="STILLS_00025_00000.jpg" onclick="openLB('STILLS_00025_00000.jpg')"></div>
+        <div class="item"><img src="Still 2026-08-25 221919_1.193.2_00000.jpg" onclick="openLB('Still 2026-08-25 221919_1.193.2_00000.jpg')"></div>
         <div class="item"><img src="5_00000.jpg" onclick="openLB('5_00000.jpg')"></div> 
         <div class="item"><img src="1.jpg" onclick="openLB('1.jpg')"></div> 
         <div class="item"><img src="gallery_8.jpg" onclick="openLB('gallery_8.jpg')"></div>
         <div class="item"><img src="STILLS_00000.png" onclick="openLB('STILLS_00000.png')"></div>
+        <div class="item"><img src="Still 2026-08-14 160057_1.54.1_00000.jpg" onclick="openLB('Still 2026-08-14 160057_1.54.1_00000.jpg')"></div>
         <div class="item"><img src="gallery_37.jpg" onclick="openLB('gallery_37.jpg')"></div> 
         <div class="item"><img src="STILLS_00001_00000.jpg" onclick="openLB('STILLS_00001_00000.jpg')"></div>
         <div class="item"><img src="STILLS_00023_00000.jpg" onclick="openLB('STILLS_00023_00000.jpg')"></div>
         <div class="item"><img src="gallery_10.jpg" onclick="openLB('gallery_10.jpg')"></div>
+        <div class="item"><img src="Still 2026-08-25 221919_1.201_00000.jpg" onclick="openLB('Still 2026-08-25 221919_1.201_00000.jpg')"></div>
         <div class="item"><img src="6_00000.jpg" onclick="openLB('6_00000.jpg')"></div> 
         <div class="item"><img src="STILLS_00012_00000.jpg" onclick="openLB('STILLS_00012_00000.jpg')"></div>
         <div class="item"><img src="STILLS_00002.png" onclick="openLB('STILLS_00002.png')"></div>
         <div class="item"><img src="STILLS_00017_00000.jpg" onclick="openLB('STILLS_00017_00000.jpg')"></div>
+        <div class="item"><img src="Still 2026-08-14 160057_1.94.1_00000.jpg" onclick="openLB('Still 2026-08-14 160057_1.94.1_00000.jpg')"></div>
         <div class="item"><img src="12_00000.jpg" onclick="openLB('12_00000.jpg')"></div> 
-        <div class="item"><img src="STILLS_00014_00000.jpg" onclick="openLB('STILLS_00014_00000.jpg')"></div>
+        <div class="item"><img src="gallery_15.jpg" onclick="openLB('gallery_15.jpg')"></div>
         <div class="item"><img src="STILLS_00003_00000.jpg" onclick="openLB('STILLS_00003_00000.jpg')"></div>
         <div class="item"><img src="STILLS_00020_00000.jpg" onclick="openLB('STILLS_00020_00000.jpg')"></div>
+        <div class="item"><img src="Still 2026-08-25 221919_1.227.1_00000.jpg" onclick="openLB('Still 2026-08-25 221919_1.227.1_00000.jpg')"></div>
         <div class="item"><img src="7_00000.jpg" onclick="openLB('7_00000.jpg')"></div> 
         <div class="item"><img src="gallery_16.jpg" onclick="openLB('gallery_16.jpg')"></div>
         <div class="item"><img src="STILLS_00018_00000.jpg" onclick="openLB('STILLS_00018_00000.jpg')"></div>
-        <div class="item"><img src="9_00000.jpg" onclick="openLB('9_00000.jpg')"></div> 
+        <div class="item"><img src="STILLS_00004.png" onclick="openLB('STILLS_00004.png')"></div>
+        <div class="item"><img src="Still 2026-08-14 160057_1.123.1_00000.jpg" onclick="openLB('Still 2026-08-14 160057_1.123.1_00000.jpg')"></div>
         <div class="item"><img src="13_00000.jpg" onclick="openLB('13_00000.jpg')"></div> 
-        <div class="item"><img src="gallery_15.jpg" onclick="openLB('gallery_15.jpg')"></div>
+        <div class="item"><img src="STILLS_00014_00000.jpg" onclick="openLB('STILLS_00014_00000.jpg')"></div>
         <div class="item"><img src="gallery_17.jpg" onclick="openLB('gallery_17.jpg')"></div>
         <div class="item"><img src="STILLS_00026_00000.jpg" onclick="openLB('STILLS_00026_00000.jpg')"></div>
+        <div class="item"><img src="Still 2026-08-25 221919_1.269.1_00000.jpg" onclick="openLB('Still 2026-08-25 221919_1.269.1_00000.jpg')"></div>
         <div class="item"><img src="8_00000.jpg" onclick="openLB('8_00000.jpg')"></div> 
         <div class="item"><img src="STILLS_00005.png" onclick="openLB('STILLS_00005.png')"></div>
         <div class="item"><img src="gallery_19.jpg" onclick="openLB('gallery_19.jpg')"></div>
         <div class="item"><img src="STILLS_00013_00000.jpg" onclick="openLB('STILLS_00013_00000.jpg')"></div>
+        <div class="item"><img src="Still 2026-08-25 221919_1.299.1_00000.jpg" onclick="openLB('Still 2026-08-25 221919_1.299.1_00000.jpg')"></div>
         <div class="item"><img src="14_00000.jpg" onclick="openLB('14_00000.jpg')"></div> 
         <div class="item"><img src="STILLS_00006.png" onclick="openLB('STILLS_00006.png')"></div>
         <div class="item"><img src="gallery_21.jpg" onclick="openLB('gallery_21.jpg')"></div>
         <div class="item"><img src="STILLS_00007_00000.jpg" onclick="openLB('STILLS_00007_00000.jpg')"></div>
-        <div class="item"><img src="STILLS_00004.png" onclick="openLB('STILLS_00004.png')"></div>
+        <div class="item"><img src="Still 2026-08-25 221919_1.333.1_00000.jpg" onclick="openLB('Still 2026-08-25 221919_1.333.1_00000.jpg')"></div>
+        <div class="item"><img src="9_00000.jpg" onclick="openLB('9_00000.jpg')"></div> 
         <div class="item"><img src="STILLS_00024_00000.jpg" onclick="openLB('STILLS_00024_00000.jpg')"></div>
         <div class="item"><img src="gallery_23.jpg" onclick="openLB('gallery_23.jpg')"></div>
         <div class="item"><img src="STILLS_00008_00000.jpg" onclick="openLB('STILLS_00008_00000.jpg')"></div>
