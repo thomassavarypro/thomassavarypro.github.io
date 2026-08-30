@@ -3,20 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Portfolio | About</title>
-    <!-- Police uniformisée -->
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;800&display=swap" rel="stylesheet">
     <style>
         body, html { margin: 0; padding: 0; height: 100%; background: #000; color: #fff; font-family: 'Syne', sans-serif; overflow: hidden; }
         
-        /* BLOC HEADER STRICTEMENT IDENTIQUE POUR LES 4 PAGES */
         header { 
-            position: absolute; 
-            top: 0; left: 0; width: 100%;
-            text-align: center; 
-            padding: 40px 0; 
-            z-index: 999; 
-            background: linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%);
-            pointer-events: none; 
+            position: absolute; top: 0; left: 0; width: 100%; text-align: center; padding: 40px 0; z-index: 999; 
+            background: linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%); pointer-events: none; 
         }
         .glitch, nav a { pointer-events: auto; } 
         
@@ -26,33 +19,12 @@
         
         nav a { color: white; text-decoration: none; margin: 0 15px; font-size: 1.2rem; font-weight: 800; transition: 0.3s; font-family: 'Syne', sans-serif; text-shadow: 0 2px 5px rgba(0,0,0,0.8); }
         nav a:hover { color: #ff0000; }
-        /* FIN DU BLOC HEADER */
 
-        .about-wrapper {
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0 40px;
-        }
+        .about-wrapper { height: 100%; display: flex; align-items: center; justify-content: center; padding: 0 40px; }
+        .about-text { max-width: 800px; text-align: center; font-size: 1.5rem; line-height: 1.8; font-weight: 400; }
+        .highlight { color: #ff0000; font-weight: 800; }
 
-        .about-text {
-            max-width: 800px;
-            text-align: center;
-            font-size: 1.5rem;
-            line-height: 1.8;
-            font-weight: 400;
-        }
-
-        .highlight {
-            color: #ff0000;
-            font-weight: 800;
-        }
-
-        @media (max-width: 768px) {
-            .glitch { font-size: 3em; }
-            .about-text { font-size: 1.1rem; }
-        }
+        @media (max-width: 768px) { .glitch { font-size: 3em; } .about-text { font-size: 1.1rem; } }
     </style>
 </head>
 <body>
@@ -60,7 +32,7 @@
     <header>
         <h1 class="glitch" onclick="window.location.href='index.html'">PORTFOLIO</h1>
         <nav>
-            <a href="index.html">STILLS</a>
+            <a href="stills.html">STILLS</a>
             <a href="work.html">WORK</a>
             <a href="about.html" style="color:gray;">ABOUT</a>
             <a href="contact.html">CONTACT</a>
@@ -69,10 +41,9 @@
 
     <div class="about-wrapper">
         <p class="about-text">
-            From Rome, based in Paris.
-            For my projects I handle directing, filming, editing, color grading and VFX, combining traditional <span class="highlight">VFX 2D</span> and <span class="highlight">IA</span>.<br><br>
-            I love <span class="highlight">striking imagery</span>, bold colors and <span class="highlight">raw émotions</span>.
-            Constantly seeking for new techniques to incorporate into my films, without ever limiting myself to a single style.
+            Issu d'une formation en <span class="highlight">montage et post-production</span>, j'ai une approche globale de la création. Sur la plupart de mes projets, j'assure la réalisation, le tournage, montage, étalonnage et effets spéciaux, en mêlant <span class="highlight">VFX 2D traditionnels et intelligence artificielle</span>.<br><br>
+            J'aime les <span class="highlight">images marquantes</span>, les couleurs fortes et faire ressentir des <span class="highlight">émotions brutes</span>. Je cherche constamment des nouvelles techniques à intégrer pour <span class="highlight">évoluer</span>, sans jamais m'enfermer dans un style unique.
+        </p>
     </div>
 
 </body>
