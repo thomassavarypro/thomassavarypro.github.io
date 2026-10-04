@@ -28,14 +28,16 @@
             position: absolute; top: 0; left: 0; width: 100vw; height: 100vh;
             display: flex; justify-content: center; align-items: center;
             z-index: 0; pointer-events: none; overflow: hidden;
+            padding: 0 5vw; /* Marge pour éviter de toucher les bords */
+            box-sizing: border-box;
         }
 
         .glitch-bg {
-            /* Utilisation de clamp pour avoir une taille min, idéale, et max. Adapté pour 9 lettres */
-            font-size: clamp(3rem, 9vw, 15rem); 
+            font-size: min(12vw, 150px); /* Taille max pour que ça rentre toujours */
             font-weight: 800; text-transform: uppercase; margin: 0; color: #fff;
-            letter-spacing: 0.5vw;
+            letter-spacing: 0.2vw;
             text-align: center;
+            white-space: nowrap; /* Force le mot sur une seule ligne */
             width: 100%;
             text-shadow: 0 4px 10px rgba(0,0,0,0.8);
             animation: glitch-bg-anim 3s infinite;
@@ -82,10 +84,9 @@
         }
         .window.active { display: flex; }
 
-        /* Style spécifique pour le player fixe repensé */
         #win-player {
-            width: clamp(320px, 45vw, 800px); /* Taille dynamique : prend presque la moitié de l'écran sur PC */
-            height: auto; /* S'adapte au contenu (ratio 16:9 de la vidéo) */
+            width: clamp(320px, 45vw, 800px); 
+            height: auto; 
             top: 40px; left: auto; right: 40px;
         }
         #win-player .window-content { padding: 0; overflow: hidden; aspect-ratio: 16/9; }
@@ -158,13 +159,13 @@
         
         /* --- ADAPTATION MOBILE / TABLETTE --- */
         @media (max-width: 900px) {
+            .glitch-bg { font-size: 14vw; letter-spacing: 0; }
             #desktop { flex-direction: row; flex-wrap: wrap; justify-content: space-evenly; gap: 20px; padding: 20px; align-items: center; }
             .folder { width: 80px; font-size: 18px; }
             .folder .icon { font-size: 40px; }
             
             .window { width: 95vw; height: 85vh; left: 2.5vw; top: 5vh; }
             
-            /* Player plus naturel sur mobile */
             #win-player { 
                 position: absolute; width: 90vw; height: auto; 
                 top: 15vh; left: 5vw; right: auto; 
@@ -178,12 +179,10 @@
 </head>
 <body>
 
-    <!-- FOND PORTFOLIO STYLISÉ -->
     <div class="desktop-wallpaper">
         <h1 class="glitch-bg">PORTFOLIO</h1>
     </div>
 
-    <!-- BUREAU -->
     <div id="desktop">
         <div class="folder" onclick="openWindow('work')">
             <span class="icon">📼</span>
@@ -203,7 +202,6 @@
         </div>
     </div>
 
-    <!-- PLAYER FIXE -->
     <div id="win-player" class="window active">
         <div class="title-bar" onmousedown="dragWindow(event, 'win-player')">
             <h1 class="glitch" style="font-size:1em;">C:\Work in Progress</h1>
@@ -213,7 +211,6 @@
         </div>
     </div>
 
-    <!-- FENÊTRE WORK -->
     <div id="win-work" class="window">
         <div class="title-bar" onmousedown="dragWindow(event, 'win-work')">
             <h1 class="glitch glitch-hover">C:\WORK</h1>
@@ -232,7 +229,6 @@
         </div>
     </div>
 
-    <!-- FENÊTRE STILLS (La liste complète est conservée, tu peux tout remettre dedans) -->
     <div id="win-stills" class="window">
         <div class="title-bar" onmousedown="dragWindow(event, 'win-stills')">
             <h1 class="glitch glitch-hover">C:\STILLS</h1>
@@ -240,17 +236,72 @@
         </div>
         <div class="window-content">
             <div class="mosaic-grid">
-                <div class="item"><img src="STILLS_00010_00000.jpg" onclick="openLB('STILLS_00010_00000.jpg')"></div>
-                <div class="item"><img src="gallery_8.jpg" onclick="openLB('gallery_8.jpg')"></div>
+                <div class="item"><img src="0.jpg" onclick="openLB('0.jpg')"></div>
                 <div class="item"><img src="1.jpg" onclick="openLB('1.jpg')"></div>
+                <div class="item"><img src="11_00000.jpg" onclick="openLB('11_00000.jpg')"></div>
+                <div class="item"><img src="12_00000.jpg" onclick="openLB('12_00000.jpg')"></div>
+                <div class="item"><img src="13_00000.jpg" onclick="openLB('13_00000.jpg')"></div>
+                <div class="item"><img src="14_00000.jpg" onclick="openLB('14_00000.jpg')"></div>
+                <div class="item"><img src="15_00000.jpg" onclick="openLB('15_00000.jpg')"></div>
+                <div class="item"><img src="2.jpg" onclick="openLB('2.jpg')"></div>
+                <div class="item"><img src="3.jpg" onclick="openLB('3.jpg')"></div>
+                <div class="item"><img src="5_00000.jpg" onclick="openLB('5_00000.jpg')"></div>
+                <div class="item"><img src="6_00000.jpg" onclick="openLB('6_00000.jpg')"></div>
+                <div class="item"><img src="7_00000.jpg" onclick="openLB('7_00000.jpg')"></div>
+                <div class="item"><img src="8_00000.jpg" onclick="openLB('8_00000.jpg')"></div>
+                <div class="item"><img src="9_00000.jpg" onclick="openLB('9_00000.jpg')"></div>
+                <div class="item"><img src="STILLS_00000.png" onclick="openLB('STILLS_00000.png')"></div>
+                <div class="item"><img src="STILLS_00001_00000.jpg" onclick="openLB('STILLS_00001_00000.jpg')"></div>
+                <div class="item"><img src="STILLS_00002.png" onclick="openLB('STILLS_00002.png')"></div>
+                <div class="item"><img src="STILLS_00003_00000.jpg" onclick="openLB('STILLS_00003_00000.jpg')"></div>
+                <div class="item"><img src="STILLS_00004.png" onclick="openLB('STILLS_00004.png')"></div>
+                <div class="item"><img src="STILLS_00005.png" onclick="openLB('STILLS_00005.png')"></div>
+                <div class="item"><img src="STILLS_00006.png" onclick="openLB('STILLS_00006.png')"></div>
+                <div class="item"><img src="STILLS_00007_00000.jpg" onclick="openLB('STILLS_00007_00000.jpg')"></div>
+                <div class="item"><img src="STILLS_00008_00000.jpg" onclick="openLB('STILLS_00008_00000.jpg')"></div>
+                <div class="item"><img src="STILLS_00009.png" onclick="openLB('STILLS_00009.png')"></div>
+                <div class="item"><img src="STILLS_00010_00000.jpg" onclick="openLB('STILLS_00010_00000.jpg')"></div>
+                <div class="item"><img src="STILLS_00011_00000.jpg" onclick="openLB('STILLS_00011_00000.jpg')"></div>
+                <div class="item"><img src="STILLS_00012_00000.jpg" onclick="openLB('STILLS_00012_00000.jpg')"></div>
+                <div class="item"><img src="STILLS_00013_00000.jpg" onclick="openLB('STILLS_00013_00000.jpg')"></div>
+                <div class="item"><img src="STILLS_00015_00000.jpg" onclick="openLB('STILLS_00015_00000.jpg')"></div>
+                <div class="item"><img src="STILLS_00016_00000.jpg" onclick="openLB('STILLS_00016_00000.jpg')"></div>
+                <div class="item"><img src="STILLS_00017_00000.jpg" onclick="openLB('STILLS_00017_00000.jpg')"></div>
+                <div class="item"><img src="STILLS_00018_00000.jpg" onclick="openLB('STILLS_00018_00000.jpg')"></div>
                 <div class="item"><img src="STILLS_00019_00000.jpg" onclick="openLB('STILLS_00019_00000.jpg')"></div>
+                <div class="item"><img src="STILLS_00020_00000.jpg" onclick="openLB('STILLS_00020_00000.jpg')"></div>
+                <div class="item"><img src="STILLS_00021_00000.jpg" onclick="openLB('STILLS_00021_00000.jpg')"></div>
+                <div class="item"><img src="STILLS_00022_00000.jpg" onclick="openLB('STILLS_00022_00000.jpg')"></div>
+                <div class="item"><img src="STILLS_00023_00000.jpg" onclick="openLB('STILLS_00023_00000.jpg')"></div>
+                <div class="item"><img src="STILLS_00024_00000.jpg" onclick="openLB('STILLS_00024_00000.jpg')"></div>
+                <div class="item"><img src="STILLS_00025_00000.jpg" onclick="openLB('STILLS_00025_00000.jpg')"></div>
+                <div class="item"><img src="STILLS_00026_00000.jpg" onclick="openLB('STILLS_00026_00000.jpg')"></div>
+                <div class="item"><img src="Still 2026-08-14 160057_1.123.1_00000.jpg" onclick="openLB('Still 2026-08-14 160057_1.123.1_00000.jpg')"></div>
                 <div class="item"><img src="Still 2026-08-14 160057_1.53.1_00000.jpg" onclick="openLB('Still 2026-08-14 160057_1.53.1_00000.jpg')"></div>
-                <!-- J'ai mis les 5 premiers pour la lisibilité, tu peux copier/coller tes 60 items ici -->
+                <div class="item"><img src="Still 2026-08-14 160057_1.54.1_00000.jpg" onclick="openLB('Still 2026-08-14 160057_1.54.1_00000.jpg')"></div>
+                <div class="item"><img src="Still 2026-08-14 160057_1.94.1_00000.jpg" onclick="openLB('Still 2026-08-14 160057_1.94.1_00000.jpg')"></div>
+                <div class="item"><img src="Still 2026-08-25 221919_1.193.2_00000.jpg" onclick="openLB('Still 2026-08-25 221919_1.193.2_00000.jpg')"></div>
+                <div class="item"><img src="Still 2026-08-25 221919_1.201_00000.jpg" onclick="openLB('Still 2026-08-25 221919_1.201_00000.jpg')"></div>
+                <div class="item"><img src="Still 2026-08-25 221919_1.227.1_00000.jpg" onclick="openLB('Still 2026-08-25 221919_1.227.1_00000.jpg')"></div>
+                <div class="item"><img src="Still 2026-08-25 221919_1.269.1_00000.jpg" onclick="openLB('Still 2026-08-25 221919_1.269.1_00000.jpg')"></div>
+                <div class="item"><img src="Still 2026-08-25 221919_1.299.1_00000.jpg" onclick="openLB('Still 2026-08-25 221919_1.299.1_00000.jpg')"></div>
+                <div class="item"><img src="Still 2026-08-25 221919_1.333.1_00000.jpg" onclick="openLB('Still 2026-08-25 221919_1.333.1_00000.jpg')"></div>
+                <div class="item"><img src="gallery_10.jpg" onclick="openLB('gallery_10.jpg')"></div>
+                <div class="item"><img src="gallery_15.jpg" onclick="openLB('gallery_15.jpg')"></div>
+                <div class="item"><img src="gallery_16.jpg" onclick="openLB('gallery_16.jpg')"></div>
+                <div class="item"><img src="gallery_17.jpg" onclick="openLB('gallery_17.jpg')"></div>
+                <div class="item"><img src="gallery_19.jpg" onclick="openLB('gallery_19.jpg')"></div>
+                <div class="item"><img src="gallery_21.jpg" onclick="openLB('gallery_21.jpg')"></div>
+                <div class="item"><img src="gallery_23.jpg" onclick="openLB('gallery_23.jpg')"></div>
+                <div class="item"><img src="gallery_25.jpg" onclick="openLB('gallery_25.jpg')"></div>
+                <div class="item"><img src="gallery_27.jpg" onclick="openLB('gallery_27.jpg')"></div>
+                <div class="item"><img src="gallery_37.jpg" onclick="openLB('gallery_37.jpg')"></div>
+                <div class="item"><img src="gallery_41.jpg" onclick="openLB('gallery_41.jpg')"></div>
+                <div class="item"><img src="gallery_8.jpg" onclick="openLB('gallery_8.jpg')"></div>
             </div>
         </div>
     </div>
 
-    <!-- FENÊTRE ABOUT -->
     <div id="win-about" class="window">
         <div class="title-bar" onmousedown="dragWindow(event, 'win-about')">
             <h1 class="glitch glitch-hover">C:\ABOUT</h1>
@@ -264,7 +315,6 @@
         </div>
     </div>
 
-    <!-- FENÊTRE CONTACT -->
     <div id="win-contact" class="window">
         <div class="title-bar" onmousedown="dragWindow(event, 'win-contact')">
             <h1 class="glitch glitch-hover">C:\CONTACT</h1>
@@ -281,7 +331,6 @@
         </div>
     </div>
 
-    <!-- LECTEUR DE PROJETS -->
     <div id="vhs-player">
         <div class="close-vhs" onclick="closeVHS()">EJECT [X]</div>
         <div class="crt-screen">
@@ -290,7 +339,6 @@
         </div>
     </div>
 
-    <!-- LIGHTBOX POUR LES STILLS -->
     <div id="lightbox" onclick="this.classList.remove('active')">
         <button class="nav-btn" style="left:20px;" onclick="changeImg(-1, event)">&#10094;</button>
         <img id="lb-img" src="">
@@ -298,7 +346,6 @@
     </div>
 
     <script>
-        // --- GESTION DES FENÊTRES ---
         let highestZ = 20;
 
         function openWindow(id) {
@@ -311,12 +358,10 @@
             document.getElementById(id).classList.remove('active');
         }
 
-        // --- DRAG & DROP FENÊTRES ---
         function dragWindow(e, windowId) {
             const win = document.getElementById(windowId);
             win.style.zIndex = ++highestZ; 
             
-            // Uniquement si on est sur un PC (écran plus large que 900px) pour éviter les bugs sur mobile
             if (window.innerWidth <= 900) return; 
 
             let startX = e.clientX, startY = e.clientY;
@@ -334,7 +379,6 @@
             document.addEventListener('mouseup', stopDrag);
         }
 
-        // --- GESTION DU LECTEUR ---
         function playVHS(vimeoId) {
             const player = document.getElementById('vhs-player');
             const iframe = document.getElementById('vhs-iframe');
@@ -351,7 +395,6 @@
             document.getElementById('vhs-iframe').src = ""; 
         }
 
-        // --- GESTION DE LA LIGHTBOX ---
         const imgs = Array.from(document.querySelectorAll('.item img'));
         let current = 0;
         
