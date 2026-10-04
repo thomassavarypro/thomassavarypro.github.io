@@ -9,7 +9,7 @@
             --os-bg: #000000;
             --window-bg: #111111;
             --border-color: #333333;
-            --highlight: #ff0000; /* Ton rouge pop/glitch */
+            --highlight: #ff0000;
             --text-color: #ffffff;
         }
 
@@ -22,25 +22,30 @@
             user-select: none;
         }
 
-        /* Vidéo de fond (ancien index) assombrie pour faire le papier peint du bureau */
-        .desktop-bg {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; opacity: 0.3;
-        }
-        .desktop-bg iframe {
-            width: 100vw; height: 56.25vw; min-height: 100vh; min-width: 177.77vh;
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); border: none;
+        /* --- ARRIÈRE-PLAN TEXTE (WALLPAPER) --- */
+        .desktop-wallpaper {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; justify-content: center; align-items: center;
+            z-index: 0; pointer-events: none;
         }
 
-        /* --- EFFET GLITCH (Ton code) --- */
-        .glitch {
-            font-size: 2em; font-weight: 800; text-transform: uppercase; margin: 0; color: #fff;
+        .glitch-bg {
+            font-size: 12vw; font-weight: 800; text-transform: uppercase; margin: 0; color: #fff;
             text-shadow: 0 4px 10px rgba(0,0,0,0.8);
+            animation: glitch 3s infinite;
         }
-        .glitch:hover { animation: glitch 0.3s infinite; }
+
+        /* --- EFFET GLITCH --- */
+        .glitch {
+            font-size: 1.5em; font-weight: 800; text-transform: uppercase; margin: 0; color: #fff;
+        }
+        .glitch-hover:hover { animation: glitch 0.3s infinite; }
         @keyframes glitch {
-            0% { color: #fff; text-shadow: 2px 0 red; }
-            50% { color: #fff; text-shadow: -2px 0 cyan; }
-            100% { color: #fff; text-shadow: 2px 0 red; }
+            0% { color: #fff; text-shadow: 4px 0 red; }
+            25% { color: #fff; text-shadow: -4px 0 cyan; }
+            50% { color: #fff; text-shadow: 4px 0 red; }
+            75% { color: #fff; text-shadow: -4px 0 cyan; }
+            100% { color: #fff; text-shadow: 4px 0 red; }
         }
 
         /* --- BUREAU & DOSSIERS --- */
@@ -63,6 +68,12 @@
             display: none; flex-direction: column; z-index: 20;
         }
         .window.active { display: flex; }
+
+        /* Style spécifique pour le player fixe */
+        #win-player {
+            width: 400px; height: 260px; top: 30px; left: auto; right: 30px;
+        }
+        #win-player .window-content { padding: 0; overflow: hidden; }
 
         .title-bar {
             background: var(--border-color); padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; cursor: move; border-bottom: 1px solid #444;
@@ -106,25 +117,20 @@
         .cassette:hover { border-color: var(--highlight); background: rgba(255,0,0,0.1); transform: translateY(-5px); }
         .cassette span { font-size: 50px; display: block; margin-bottom: 10px; }
 
-        /* --- LECTEUR VHS / TV --- */
+        /* --- LECTEUR VIDÉO PURE (Ex VHS) --- */
         #vhs-player {
             display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #050505; z-index: 100; flex-direction: column; justify-content: center; align-items: center;
         }
         #vhs-player.active { display: flex; animation: turnOn 0.5s ease-out forwards; }
         
+        /* L'écran ne contient plus de scanlines, il est pur */
         .crt-screen {
-            position: relative; width: 85vw; aspect-ratio: 16/9; background: #000; border: 2px solid #222; box-shadow: 0 0 50px rgba(255,0,0,0.2); overflow: hidden;
+            position: relative; width: 85vw; aspect-ratio: 16/9; background: #000; border: 2px solid #222; box-shadow: 0 0 50px rgba(255,0,0,0.2);
         }
         .crt-screen iframe { width: 100%; height: 100%; border: none; position: relative; z-index: 5; }
         
-        /* OSD Vert magnétoscope */
         .osd-text { position: absolute; top: 30px; left: 40px; color: #00ff00; font-family: 'VT323', monospace; font-size: 40px; z-index: 10; pointer-events: none; text-shadow: 2px 2px 0px #000; }
         
-        /* Scanlines */
-        .crt-screen::after {
-            content: " "; display: block; position: absolute; top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%); background-size: 100% 4px; pointer-events: none; z-index: 20;
-        }
         .close-vhs { position: absolute; top: 20px; right: 30px; color: #fff; font-family: 'VT323', monospace; font-size: 30px; cursor: pointer; z-index: 101; text-decoration: underline; }
         .close-vhs:hover { color: var(--highlight); }
 
@@ -136,16 +142,18 @@
         
         @media (max-width: 768px) {
             .window { width: 90vw; height: 85vh; left: 5vw; top: 5vh; }
+            #win-player { width: 90vw; height: auto; aspect-ratio: 16/9; left: 5vw; top: 5vh; right: auto; }
             .mosaic-grid { grid-template-columns: repeat(2, 1fr); }
             .crt-screen { width: 100vw; border: none; }
+            .glitch-bg { font-size: 15vw; }
         }
     </style>
 </head>
 <body>
 
-    <!-- FOND VIMEO DE TON INDEX -->
-    <div class="desktop-bg">
-        <iframe src="https://player.vimeo.com/video/1222492862?background=1&autoplay=1&loop=1&muted=1" allow="autoplay; fullscreen" allowfullscreen></iframe>
+    <!-- FOND PORTFOLIO STYLISÉ -->
+    <div class="desktop-wallpaper">
+        <h1 class="glitch-bg">PORTFOLIO</h1>
     </div>
 
     <!-- BUREAU -->
@@ -168,15 +176,24 @@
         </div>
     </div>
 
+    <!-- PLAYER FIXE (Vidéo de fond) -->
+    <div id="win-player" class="window active">
+        <div class="title-bar" onmousedown="dragWindow(event, 'win-player')">
+            <h1 class="glitch" style="font-size:1em;">C:\PLAYER_BOUCLE</h1>
+        </div>
+        <div class="window-content">
+            <iframe src="https://player.vimeo.com/video/1222492862?background=1&autoplay=1&loop=1&muted=1" allow="autoplay; fullscreen" allowfullscreen style="width:100%; height:100%; border:none;"></iframe>
+        </div>
+    </div>
+
     <!-- FENÊTRE WORK -->
     <div id="win-work" class="window">
         <div class="title-bar" onmousedown="dragWindow(event, 'win-work')">
-            <h1 class="glitch" style="font-size:1.5em;">C:\WORK</h1>
+            <h1 class="glitch glitch-hover">C:\WORK</h1>
             <button class="close-btn" onclick="closeWindow('win-work')">X</button>
         </div>
         <div class="window-content">
             <div class="work-grid">
-                <!-- Tes liens vimeo injectés dans des cassettes -->
                 <div class="cassette" onclick="playVHS('1222482193')"><span>📼</span>PROJET 01</div>
                 <div class="cassette" onclick="playVHS('1208359948')"><span>📼</span>PROJET 02</div>
                 <div class="cassette" onclick="playVHS('1208359248')"><span>📼</span>PROJET 03</div>
@@ -188,15 +205,14 @@
         </div>
     </div>
 
-    <!-- FENÊTRE STILLS -->
+    <!-- FENÊTRE STILLS (La liste complète) -->
     <div id="win-stills" class="window">
         <div class="title-bar" onmousedown="dragWindow(event, 'win-stills')">
-            <h1 class="glitch" style="font-size:1.5em;">C:\STILLS</h1>
+            <h1 class="glitch glitch-hover">C:\STILLS</h1>
             <button class="close-btn" onclick="closeWindow('win-stills')">X</button>
         </div>
         <div class="window-content">
             <div class="mosaic-grid">
-                <!-- J'ai repris tes images exactes -->
                 <div class="item"><img src="STILLS_00010_00000.jpg" onclick="openLB('STILLS_00010_00000.jpg')"></div>
                 <div class="item"><img src="gallery_8.jpg" onclick="openLB('gallery_8.jpg')"></div>
                 <div class="item"><img src="1.jpg" onclick="openLB('1.jpg')"></div>
@@ -207,7 +223,56 @@
                 <div class="item"><img src="gallery_37.jpg" onclick="openLB('gallery_37.jpg')"></div>
                 <div class="item"><img src="STILLS_00000.png" onclick="openLB('STILLS_00000.png')"></div>
                 <div class="item"><img src="5_00000.jpg" onclick="openLB('5_00000.jpg')"></div>
-                <!-- Ajoute le reste de tes images ici sous le même format -->
+                <div class="item"><img src="STILLS_00001_00000.jpg" onclick="openLB('STILLS_00001_00000.jpg')"></div>
+                <div class="item"><img src="Still 2026-08-25 221919_1.193.2_00000.jpg" onclick="openLB('Still 2026-08-25 221919_1.193.2_00000.jpg')"></div>
+                <div class="item"><img src="STILLS_00023_00000.jpg" onclick="openLB('STILLS_00023_00000.jpg')"></div>
+                <div class="item"><img src="gallery_10.jpg" onclick="openLB('gallery_10.jpg')"></div>
+                <div class="item"><img src="STILLS_00012_00000.jpg" onclick="openLB('STILLS_00012_00000.jpg')"></div>
+                <div class="item"><img src="6_00000.jpg" onclick="openLB('6_00000.jpg')"></div>
+                <div class="item"><img src="STILLS_00002.png" onclick="openLB('STILLS_00002.png')"></div>
+                <div class="item"><img src="Still 2026-08-14 160057_1.54.1_00000.jpg" onclick="openLB('Still 2026-08-14 160057_1.54.1_00000.jpg')"></div>
+                <div class="item"><img src="STILLS_00017_00000.jpg" onclick="openLB('STILLS_00017_00000.jpg')"></div>
+                <div class="item"><img src="gallery_15.jpg" onclick="openLB('gallery_15.jpg')"></div>
+                <div class="item"><img src="STILLS_00003_00000.jpg" onclick="openLB('STILLS_00003_00000.jpg')"></div>
+                <div class="item"><img src="12_00000.jpg" onclick="openLB('12_00000.jpg')"></div>
+                <div class="item"><img src="STILLS_00020_00000.jpg" onclick="openLB('STILLS_00020_00000.jpg')"></div>
+                <div class="item"><img src="Still 2026-08-25 221919_1.201_00000.jpg" onclick="openLB('Still 2026-08-25 221919_1.201_00000.jpg')"></div>
+                <div class="item"><img src="STILLS_00018_00000.jpg" onclick="openLB('STILLS_00018_00000.jpg')"></div>
+                <div class="item"><img src="gallery_16.jpg" onclick="openLB('gallery_16.jpg')"></div>
+                <div class="item"><img src="STILLS_00004.png" onclick="openLB('STILLS_00004.png')"></div>
+                <div class="item"><img src="7_00000.jpg" onclick="openLB('7_00000.jpg')"></div>
+                <div class="item"><img src="STILLS_00014_00000.jpg" onclick="openLB('STILLS_00014_00000.jpg')"></div>
+                <div class="item"><img src="Still 2026-08-14 160057_1.94.1_00000.jpg" onclick="openLB('Still 2026-08-14 160057_1.94.1_00000.jpg')"></div>
+                <div class="item"><img src="STILLS_00026_00000.jpg" onclick="openLB('STILLS_00026_00000.jpg')"></div>
+                <div class="item"><img src="gallery_17.jpg" onclick="openLB('gallery_17.jpg')"></div>
+                <div class="item"><img src="STILLS_00005.png" onclick="openLB('STILLS_00005.png')"></div>
+                <div class="item"><img src="13_00000.jpg" onclick="openLB('13_00000.jpg')"></div>
+                <div class="item"><img src="STILLS_00013_00000.jpg" onclick="openLB('STILLS_00013_00000.jpg')"></div>
+                <div class="item"><img src="Still 2026-08-25 221919_1.227.1_00000.jpg" onclick="openLB('Still 2026-08-25 221919_1.227.1_00000.jpg')"></div>
+                <div class="item"><img src="STILLS_00006.png" onclick="openLB('STILLS_00006.png')"></div>
+                <div class="item"><img src="gallery_19.jpg" onclick="openLB('gallery_19.jpg')"></div>
+                <div class="item"><img src="STILLS_00007_00000.jpg" onclick="openLB('STILLS_00007_00000.jpg')"></div>
+                <div class="item"><img src="8_00000.jpg" onclick="openLB('8_00000.jpg')"></div>
+                <div class="item"><img src="STILLS_00024_00000.jpg" onclick="openLB('STILLS_00024_00000.jpg')"></div>
+                <div class="item"><img src="Still 2026-08-14 160057_1.123.1_00000.jpg" onclick="openLB('Still 2026-08-14 160057_1.123.1_00000.jpg')"></div>
+                <div class="item"><img src="STILLS_00008_00000.jpg" onclick="openLB('STILLS_00008_00000.jpg')"></div>
+                <div class="item"><img src="gallery_21.jpg" onclick="openLB('gallery_21.jpg')"></div>
+                <div class="item"><img src="STILLS_00016_00000.jpg" onclick="openLB('STILLS_00016_00000.jpg')"></div>
+                <div class="item"><img src="14_00000.jpg" onclick="openLB('14_00000.jpg')"></div>
+                <div class="item"><img src="STILLS_00009.png" onclick="openLB('STILLS_00009.png')"></div>
+                <div class="item"><img src="Still 2026-08-25 221919_1.269.1_00000.jpg" onclick="openLB('Still 2026-08-25 221919_1.269.1_00000.jpg')"></div>
+                <div class="item"><img src="STILLS_00011_00000.jpg" onclick="openLB('STILLS_00011_00000.jpg')"></div>
+                <div class="item"><img src="gallery_23.jpg" onclick="openLB('gallery_23.jpg')"></div>
+                <div class="item"><img src="STILLS_00021_00000.jpg" onclick="openLB('STILLS_00021_00000.jpg')"></div>
+                <div class="item"><img src="9_00000.jpg" onclick="openLB('9_00000.jpg')"></div>
+                <div class="item"><img src="gallery_25.jpg" onclick="openLB('gallery_25.jpg')"></div>
+                <div class="item"><img src="Still 2026-08-25 221919_1.299.1_00000.jpg" onclick="openLB('Still 2026-08-25 221919_1.299.1_00000.jpg')"></div>
+                <div class="item"><img src="15_00000.jpg" onclick="openLB('15_00000.jpg')"></div>
+                <div class="item"><img src="gallery_27.jpg" onclick="openLB('gallery_27.jpg')"></div>
+                <div class="item"><img src="11_00000.jpg" onclick="openLB('11_00000.jpg')"></div>
+                <div class="item"><img src="Still 2026-08-25 221919_1.333.1_00000.jpg" onclick="openLB('Still 2026-08-25 221919_1.333.1_00000.jpg')"></div>
+                <div class="item"><img src="gallery_41.jpg" onclick="openLB('gallery_41.jpg')"></div>
+                <div class="item"><img src="2.jpg" onclick="openLB('2.jpg')"></div>
             </div>
         </div>
     </div>
@@ -215,7 +280,7 @@
     <!-- FENÊTRE ABOUT -->
     <div id="win-about" class="window">
         <div class="title-bar" onmousedown="dragWindow(event, 'win-about')">
-            <h1 class="glitch" style="font-size:1.5em;">C:\ABOUT</h1>
+            <h1 class="glitch glitch-hover">C:\ABOUT</h1>
             <button class="close-btn" onclick="closeWindow('win-about')">X</button>
         </div>
         <div class="window-content" style="display: flex; align-items: center;">
@@ -229,11 +294,10 @@
     <!-- FENÊTRE CONTACT -->
     <div id="win-contact" class="window">
         <div class="title-bar" onmousedown="dragWindow(event, 'win-contact')">
-            <h1 class="glitch" style="font-size:1.5em;">C:\CONTACT</h1>
+            <h1 class="glitch glitch-hover">C:\CONTACT</h1>
             <button class="close-btn" onclick="closeWindow('win-contact')">X</button>
         </div>
         <div class="window-content" style="padding:0; overflow:hidden;">
-            <!-- Ta vidéo de contact en fond de la fenêtre -->
             <video autoplay loop muted playsinline class="contact-video-bg">
                 <source src="video_contact.mp4" type="video/mp4">
             </video>
@@ -244,7 +308,7 @@
         </div>
     </div>
 
-    <!-- LECTEUR VHS FULLSCREEN -->
+    <!-- LECTEUR DE PROJETS (Sans filtre crt) -->
     <div id="vhs-player">
         <div class="close-vhs" onclick="closeVHS()">EJECT [X]</div>
         <div class="crt-screen">
@@ -267,17 +331,17 @@
         function openWindow(id) {
             const win = document.getElementById('win-' + id);
             win.classList.add('active');
-            win.style.zIndex = ++highestZ; // Met la fenêtre au premier plan
+            win.style.zIndex = ++highestZ;
         }
 
         function closeWindow(id) {
             document.getElementById(id).classList.remove('active');
         }
 
-        // --- DÉPLACEMENT DES FENÊTRES (DRAG & DROP) ---
+        // --- DRAG & DROP FENÊTRES ---
         function dragWindow(e, windowId) {
             const win = document.getElementById(windowId);
-            win.style.zIndex = ++highestZ; // Passe au premier plan au clic
+            win.style.zIndex = ++highestZ; 
             
             let startX = e.clientX, startY = e.clientY;
             let startLeft = win.offsetLeft, startTop = win.offsetTop;
@@ -294,15 +358,14 @@
             document.addEventListener('mouseup', stopDrag);
         }
 
-        // --- GESTION DU LECTEUR VHS ---
+        // --- GESTION DU LECTEUR ---
         function playVHS(vimeoId) {
             const player = document.getElementById('vhs-player');
             const iframe = document.getElementById('vhs-iframe');
             
-            // Construit le lien Vimeo (autoplay activé)
+            // Le lecteur Vimeo avec les vidéos pures
             iframe.src = `https://player.vimeo.com/video/${vimeoId}?autoplay=1&title=0&byline=0&portrait=0`;
             
-            // Relance l'animation CRT
             player.classList.remove('active');
             void player.offsetWidth; 
             player.classList.add('active');
@@ -310,10 +373,10 @@
 
         function closeVHS() {
             document.getElementById('vhs-player').classList.remove('active');
-            document.getElementById('vhs-iframe').src = ""; // Coupe le son
+            document.getElementById('vhs-iframe').src = ""; 
         }
 
-        // --- GESTION DE LA LIGHTBOX (Ton code adapté) ---
+        // --- GESTION DE LA LIGHTBOX ---
         const imgs = Array.from(document.querySelectorAll('.item img'));
         let current = 0;
         
