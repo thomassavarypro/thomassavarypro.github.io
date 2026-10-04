@@ -23,24 +23,23 @@
             user-select: none;
         }
 
-        /* --- ARRIÈRE-PLAN TEXTE (WALLPAPER) --- */
+        /* --- ARRIÈRE-PLAN TEXTE (SCREENSAVER) --- */
         .desktop-wallpaper {
             position: absolute; top: 0; left: 0; width: 100vw; height: 100vh;
-            display: flex; justify-content: center; align-items: center;
             z-index: 0; pointer-events: none; overflow: hidden;
-            padding: 0 5vw; /* Marge pour éviter de toucher les bords */
-            box-sizing: border-box;
         }
 
         .glitch-bg {
-            font-size: min(12vw, 150px); /* Taille max pour que ça rentre toujours */
+            position: absolute;
+            top: 0; left: 0;
+            font-size: clamp(2rem, 4vw, 5rem); /* Taille fortement réduite */
             font-weight: 800; text-transform: uppercase; margin: 0; color: #fff;
             letter-spacing: 0.2vw;
-            text-align: center;
-            white-space: nowrap; /* Force le mot sur une seule ligne */
-            width: 100%;
+            white-space: nowrap;
+            width: max-content; /* Épouse exactement la taille du texte pour le rebond */
             text-shadow: 0 4px 10px rgba(0,0,0,0.8);
             animation: glitch-bg-anim 3s infinite;
+            will-change: transform; /* Optimisation des performances pour l'animation JS */
         }
 
         /* --- EFFET GLITCH --- */
@@ -159,7 +158,6 @@
         
         /* --- ADAPTATION MOBILE / TABLETTE --- */
         @media (max-width: 900px) {
-            .glitch-bg { font-size: 14vw; letter-spacing: 0; }
             #desktop { flex-direction: row; flex-wrap: wrap; justify-content: space-evenly; gap: 20px; padding: 20px; align-items: center; }
             .folder { width: 80px; font-size: 18px; }
             .folder .icon { font-size: 40px; }
@@ -180,7 +178,7 @@
 <body>
 
     <div class="desktop-wallpaper">
-        <h1 class="glitch-bg">PORTFOLIO</h1>
+        <h1 class="glitch-bg" id="bouncing-text">PORTFOLIO</h1>
     </div>
 
     <div id="desktop">
@@ -346,6 +344,49 @@
     </div>
 
     <script>
+        // --- ANIMATION REBOND "SCREENSAVER DVD" ---
+        const textElement = document.getElementById('bouncing-text');
+        
+        let x = 100; // Position de départ X
+        let y = 100; // Position de départ Y
+        let dx = 2.5; // Vitesse horizontale
+        let dy = 2.5; // Vitesse verticale
+
+        function animateBounce() {
+            const rect = textElement.getBoundingClientRect();
+            const winWidth = window.innerWidth;
+            const winHeight = window.innerHeight;
+
+            // Collisions latérales
+            if (x + rect.width >= winWidth) {
+                x = winWidth - rect.width;
+                dx = -Math.abs(dx);
+            } else if (x <= 0) {
+                x = 0;
+                dx = Math.abs(dx);
+            }
+
+            // Collisions haut/bas
+            if (y + rect.height >= winHeight) {
+                y = winHeight - rect.height;
+                dy = -Math.abs(dy);
+            } else if (y <= 0) {
+                y = 0;
+                dy = Math.abs(dy);
+            }
+
+            x += dx;
+            y += dy;
+
+            // Applique le déplacement via transform (meilleur pour les performances)
+            textElement.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+            requestAnimationFrame(animateBounce);
+        }
+        
+        // Lance l'animation
+        requestAnimationFrame(animateBounce);
+
+        // --- RESTE DU SCRIPT ---
         let highestZ = 20;
 
         function openWindow(id) {
