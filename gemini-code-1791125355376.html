@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Portfolio | OS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;800&family=VT323&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --os-bg: #000000;
+            --window-bg: #111111;
+            --border-color: #333333;
+            --highlight: #ff0000; /* Ton rouge pop/glitch */
+            --text-color: #ffffff;
+        }
+
+        body, html {
+            margin: 0; padding: 0; height: 100%;
+            background: var(--os-bg);
+            color: var(--text-color);
+            font-family: 'Syne', sans-serif;
+            overflow: hidden;
+            user-select: none;
+        }
+
+        /* Vidéo de fond (ancien index) assombrie pour faire le papier peint du bureau */
+        .desktop-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; opacity: 0.3;
+        }
+        .desktop-bg iframe {
+            width: 100vw; height: 56.25vw; min-height: 100vh; min-width: 177.77vh;
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); border: none;
+        }
+
+        /* --- EFFET GLITCH (Ton code) --- */
+        .glitch {
+            font-size: 2em; font-weight: 800; text-transform: uppercase; margin: 0; color: #fff;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.8);
+        }
+        .glitch:hover { animation: glitch 0.3s infinite; }
+        @keyframes glitch {
+            0% { color: #fff; text-shadow: 2px 0 red; }
+            50% { color: #fff; text-shadow: -2px 0 cyan; }
+            100% { color: #fff; text-shadow: 2px 0 red; }
+        }
+
+        /* --- BUREAU & DOSSIERS --- */
+        #desktop {
+            position: relative; z-index: 10; height: 100vh; padding: 40px; display: flex; flex-direction: column; gap: 30px; align-items: flex-start;
+        }
+
+        .folder {
+            width: 120px; text-align: center; cursor: pointer; transition: transform 0.2s; font-family: 'VT323', monospace; font-size: 24px; color: white;
+        }
+        .folder .icon { font-size: 60px; display: block; margin-bottom: 5px; filter: grayscale(100%); transition: 0.3s; }
+        .folder:hover { transform: scale(1.1); color: var(--highlight); }
+        .folder:hover .icon { filter: grayscale(0%) drop-shadow(2px 2px 0px var(--highlight)); }
+
+        /* --- FENÊTRES OS --- */
+        .window {
+            position: absolute; top: 10%; left: 15%; width: 70vw; height: 75vh;
+            background: var(--window-bg); border: 2px solid var(--border-color);
+            box-shadow: 8px 8px 0px rgba(0,0,0,0.8), 0 0 30px rgba(255,0,0,0.1);
+            display: none; flex-direction: column; z-index: 20;
+        }
+        .window.active { display: flex; }
+
+        .title-bar {
+            background: var(--border-color); padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; cursor: move; border-bottom: 1px solid #444;
+        }
+        .close-btn {
+            background: transparent; color: white; border: 1px solid white; cursor: pointer; font-family: 'VT323', monospace; font-size: 20px; padding: 2px 10px; transition: 0.2s;
+        }
+        .close-btn:hover { background: var(--highlight); border-color: var(--highlight); }
+
+        .window-content { padding: 30px; flex-grow: 1; overflow-y: auto; position: relative; }
+
+        /* --- DOSSIER ABOUT --- */
+        .about-text { font-size: 1.3rem; line-height: 1.8; max-width: 800px; margin: 0 auto; text-align: center; }
+        .highlight { color: var(--highlight); font-weight: 800; }
+
+        /* --- DOSSIER CONTACT --- */
+        .contact-video-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; filter: brightness(0.4); pointer-events: none; }
+        .contact-content { position: relative; z-index: 10; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 20px; }
+        .contact-content a { color: #fff; font-size: 2rem; text-decoration: none; transition: 0.3s; font-weight: 800; z-index: 20; }
+        .contact-content a:hover { color: var(--highlight); animation: glitch 0.3s infinite; }
+
+        /* --- DOSSIER STILLS --- */
+        .mosaic-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+        .item { aspect-ratio: 4/3; overflow: hidden; background: #000; cursor: pointer; border: 1px solid #333; transition: 0.2s; }
+        .item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+        .item:hover { border-color: var(--highlight); }
+        .item:hover img { transform: scale(1.15); }
+
+        #lightbox { display: none; position: fixed; top:0; left:0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 1000; align-items: center; justify-content: center; }
+        #lightbox.active { display: flex; }
+        #lightbox img { max-width: 85%; max-height: 85%; object-fit: contain; border: 2px solid #333; }
+        .nav-btn { position: absolute; top: 50%; color: white; font-size: 3em; cursor: pointer; background: none; border: none; padding: 20px; transform: translateY(-50%); transition: 0.2s; }
+        .nav-btn:hover { color: var(--highlight); }
+
+        /* --- DOSSIER WORK (Cassettes) --- */
+        .work-grid { display: flex; flex-wrap: wrap; gap: 30px; justify-content: center; }
+        .cassette { 
+            width: 150px; text-align: center; cursor: pointer; font-family: 'VT323', monospace; font-size: 22px; 
+            padding: 15px; border: 1px dashed #444; transition: 0.2s; background: rgba(255,255,255,0.02);
+        }
+        .cassette:hover { border-color: var(--highlight); background: rgba(255,0,0,0.1); transform: translateY(-5px); }
+        .cassette span { font-size: 50px; display: block; margin-bottom: 10px; }
+
+        /* --- LECTEUR VHS / TV --- */
+        #vhs-player {
+            display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #050505; z-index: 100; flex-direction: column; justify-content: center; align-items: center;
+        }
+        #vhs-player.active { display: flex; animation: turnOn 0.5s ease-out forwards; }
+        
+        .crt-screen {
+            position: relative; width: 85vw; aspect-ratio: 16/9; background: #000; border: 2px solid #222; box-shadow: 0 0 50px rgba(255,0,0,0.2); overflow: hidden;
+        }
+        .crt-screen iframe { width: 100%; height: 100%; border: none; position: relative; z-index: 5; }
+        
+        /* OSD Vert magnétoscope */
+        .osd-text { position: absolute; top: 30px; left: 40px; color: #00ff00; font-family: 'VT323', monospace; font-size: 40px; z-index: 10; pointer-events: none; text-shadow: 2px 2px 0px #000; }
+        
+        /* Scanlines */
+        .crt-screen::after {
+            content: " "; display: block; position: absolute; top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%); background-size: 100% 4px; pointer-events: none; z-index: 20;
+        }
+        .close-vhs { position: absolute; top: 20px; right: 30px; color: #fff; font-family: 'VT323', monospace; font-size: 30px; cursor: pointer; z-index: 101; text-decoration: underline; }
+        .close-vhs:hover { color: var(--highlight); }
+
+        @keyframes turnOn {
+            0% { transform: scale(1, 0.001); filter: brightness(10); opacity: 0; }
+            40% { transform: scale(1, 0.001); filter: brightness(5); opacity: 1; }
+            100% { transform: scale(1, 1); filter: brightness(1); }
+        }
+        
+        @media (max-width: 768px) {
+            .window { width: 90vw; height: 85vh; left: 5vw; top: 5vh; }
+            .mosaic-grid { grid-template-columns: repeat(2, 1fr); }
+            .crt-screen { width: 100vw; border: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- FOND VIMEO DE TON INDEX -->
+    <div class="desktop-bg">
+        <iframe src="https://player.vimeo.com/video/1222492862?background=1&autoplay=1&loop=1&muted=1" allow="autoplay; fullscreen" allowfullscreen></iframe>
+    </div>
+
+    <!-- BUREAU -->
+    <div id="desktop">
+        <div class="folder" onclick="openWindow('work')">
+            <span class="icon">📼</span>
+            <span>WORK.exe</span>
+        </div>
+        <div class="folder" onclick="openWindow('stills')">
+            <span class="icon">📸</span>
+            <span>STILLS.dir</span>
+        </div>
+        <div class="folder" onclick="openWindow('about')">
+            <span class="icon">TXT</span>
+            <span>ABOUT.txt</span>
+        </div>
+        <div class="folder" onclick="openWindow('contact')">
+            <span class="icon">✉️</span>
+            <span>CONTACT.bat</span>
+        </div>
+    </div>
+
+    <!-- FENÊTRE WORK -->
+    <div id="win-work" class="window">
+        <div class="title-bar" onmousedown="dragWindow(event, 'win-work')">
+            <h1 class="glitch" style="font-size:1.5em;">C:\WORK</h1>
+            <button class="close-btn" onclick="closeWindow('win-work')">X</button>
+        </div>
+        <div class="window-content">
+            <div class="work-grid">
+                <!-- Tes liens vimeo injectés dans des cassettes -->
+                <div class="cassette" onclick="playVHS('1222482193')"><span>📼</span>PROJET 01</div>
+                <div class="cassette" onclick="playVHS('1208359948')"><span>📼</span>PROJET 02</div>
+                <div class="cassette" onclick="playVHS('1208359248')"><span>📼</span>PROJET 03</div>
+                <div class="cassette" onclick="playVHS('1208359340')"><span>📼</span>PROJET 04</div>
+                <div class="cassette" onclick="playVHS('1222482239')"><span>📼</span>PROJET 05</div>
+                <div class="cassette" onclick="playVHS('1222492930')"><span>📼</span>PROJET 06</div>
+                <div class="cassette" onclick="playVHS('1208359283')"><span>📼</span>PROJET 07</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FENÊTRE STILLS -->
+    <div id="win-stills" class="window">
+        <div class="title-bar" onmousedown="dragWindow(event, 'win-stills')">
+            <h1 class="glitch" style="font-size:1.5em;">C:\STILLS</h1>
+            <button class="close-btn" onclick="closeWindow('win-stills')">X</button>
+        </div>
+        <div class="window-content">
+            <div class="mosaic-grid">
+                <!-- J'ai repris tes images exactes -->
+                <div class="item"><img src="STILLS_00010_00000.jpg" onclick="openLB('STILLS_00010_00000.jpg')"></div>
+                <div class="item"><img src="gallery_8.jpg" onclick="openLB('gallery_8.jpg')"></div>
+                <div class="item"><img src="1.jpg" onclick="openLB('1.jpg')"></div>
+                <div class="item"><img src="STILLS_00019_00000.jpg" onclick="openLB('STILLS_00019_00000.jpg')"></div>
+                <div class="item"><img src="Still 2026-08-14 160057_1.53.1_00000.jpg" onclick="openLB('Still 2026-08-14 160057_1.53.1_00000.jpg')"></div>
+                <div class="item"><img src="STILLS_00025_00000.jpg" onclick="openLB('STILLS_00025_00000.jpg')"></div>
+                <div class="item"><img src="3.jpg" onclick="openLB('3.jpg')"></div>
+                <div class="item"><img src="gallery_37.jpg" onclick="openLB('gallery_37.jpg')"></div>
+                <div class="item"><img src="STILLS_00000.png" onclick="openLB('STILLS_00000.png')"></div>
+                <div class="item"><img src="5_00000.jpg" onclick="openLB('5_00000.jpg')"></div>
+                <!-- Ajoute le reste de tes images ici sous le même format -->
+            </div>
+        </div>
+    </div>
+
+    <!-- FENÊTRE ABOUT -->
+    <div id="win-about" class="window">
+        <div class="title-bar" onmousedown="dragWindow(event, 'win-about')">
+            <h1 class="glitch" style="font-size:1.5em;">C:\ABOUT</h1>
+            <button class="close-btn" onclick="closeWindow('win-about')">X</button>
+        </div>
+        <div class="window-content" style="display: flex; align-items: center;">
+            <p class="about-text">
+                Issu d'une formation en <span class="highlight">montage et post-production</span>, j'ai une approche globale de la création. Sur la plupart de mes projets, j'assure la réalisation, le tournage, montage, étalonnage et effets spéciaux, en mêlant <span class="highlight">VFX 2D traditionnels et intelligence artificielle</span>.<br><br>
+                J'aime les <span class="highlight">images marquantes</span>, les couleurs fortes et faire ressentir des <span class="highlight">émotions brutes</span>. Je cherche constamment des nouvelles techniques à intégrer pour <span class="highlight">évoluer</span>, sans jamais m'enfermer dans un style unique.
+            </p>
+        </div>
+    </div>
+
+    <!-- FENÊTRE CONTACT -->
+    <div id="win-contact" class="window">
+        <div class="title-bar" onmousedown="dragWindow(event, 'win-contact')">
+            <h1 class="glitch" style="font-size:1.5em;">C:\CONTACT</h1>
+            <button class="close-btn" onclick="closeWindow('win-contact')">X</button>
+        </div>
+        <div class="window-content" style="padding:0; overflow:hidden;">
+            <!-- Ta vidéo de contact en fond de la fenêtre -->
+            <video autoplay loop muted playsinline class="contact-video-bg">
+                <source src="video_contact.mp4" type="video/mp4">
+            </video>
+            <div class="contact-content">
+                <a href="mailto:thomassavarypro@gmail.com">thomassavarypro@gmail.com</a>
+                <a href="tel:+33617204682">06 17 20 46 82</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- LECTEUR VHS FULLSCREEN -->
+    <div id="vhs-player">
+        <div class="close-vhs" onclick="closeVHS()">EJECT [X]</div>
+        <div class="crt-screen">
+            <div class="osd-text">PLAY<br>►</div>
+            <iframe id="vhs-iframe" src="" allow="autoplay; fullscreen" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <!-- LIGHTBOX POUR LES STILLS -->
+    <div id="lightbox" onclick="this.classList.remove('active')">
+        <button class="nav-btn" style="left:20px;" onclick="changeImg(-1, event)">&#10094;</button>
+        <img id="lb-img" src="">
+        <button class="nav-btn" style="right:20px;" onclick="changeImg(1, event)">&#10095;</button>
+    </div>
+
+    <script>
+        // --- GESTION DES FENÊTRES ---
+        let highestZ = 20;
+
+        function openWindow(id) {
+            const win = document.getElementById('win-' + id);
+            win.classList.add('active');
+            win.style.zIndex = ++highestZ; // Met la fenêtre au premier plan
+        }
+
+        function closeWindow(id) {
+            document.getElementById(id).classList.remove('active');
+        }
+
+        // --- DÉPLACEMENT DES FENÊTRES (DRAG & DROP) ---
+        function dragWindow(e, windowId) {
+            const win = document.getElementById(windowId);
+            win.style.zIndex = ++highestZ; // Passe au premier plan au clic
+            
+            let startX = e.clientX, startY = e.clientY;
+            let startLeft = win.offsetLeft, startTop = win.offsetTop;
+
+            function doDrag(e) {
+                win.style.left = (startLeft + e.clientX - startX) + 'px';
+                win.style.top = (startTop + e.clientY - startY) + 'px';
+            }
+            function stopDrag() {
+                document.removeEventListener('mousemove', doDrag);
+                document.removeEventListener('mouseup', stopDrag);
+            }
+            document.addEventListener('mousemove', doDrag);
+            document.addEventListener('mouseup', stopDrag);
+        }
+
+        // --- GESTION DU LECTEUR VHS ---
+        function playVHS(vimeoId) {
+            const player = document.getElementById('vhs-player');
+            const iframe = document.getElementById('vhs-iframe');
+            
+            // Construit le lien Vimeo (autoplay activé)
+            iframe.src = `https://player.vimeo.com/video/${vimeoId}?autoplay=1&title=0&byline=0&portrait=0`;
+            
+            // Relance l'animation CRT
+            player.classList.remove('active');
+            void player.offsetWidth; 
+            player.classList.add('active');
+        }
+
+        function closeVHS() {
+            document.getElementById('vhs-player').classList.remove('active');
+            document.getElementById('vhs-iframe').src = ""; // Coupe le son
+        }
+
+        // --- GESTION DE LA LIGHTBOX (Ton code adapté) ---
+        const imgs = Array.from(document.querySelectorAll('.item img'));
+        let current = 0;
+        
+        function openLB(src) {
+            current = imgs.findIndex(img => img.src.includes(src));
+            document.getElementById('lb-img').src = src;
+            document.getElementById('lightbox').classList.add('active');
+        }
+        
+        function changeImg(n, e) {
+            e.stopPropagation();
+            current = (current + n + imgs.length) % imgs.length;
+            document.getElementById('lb-img').src = imgs[current].src;
+        }
+    </script>
+</body>
+</html>
