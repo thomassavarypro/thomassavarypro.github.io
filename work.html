@@ -30,20 +30,18 @@
         .mosaic-grid { 
             display: grid; 
             grid-template-columns: repeat(2, 1fr); 
-            gap: 40px; 
-            max-width: 1800px; 
-            margin: 0 auto; 
-            padding: 160px 40px 60px 40px; 
+            gap: 0; /* Colle les lecteurs entre eux */
+            width: 100%; /* Prend toute la largeur de l'écran */
+            margin: 0; 
+            padding: 220px 0 0 0; /* Baisse les vidéos pour dégager le menu, aucun espace sur les côtés */
             box-sizing: border-box;
         }
         
-        /* Méthode infaillible pour forcer le format 16:9 des vidéos */
         .item { 
             position: relative; 
             width: 100%;
-            padding-bottom: 56.25%; /* C'est ce qui crée le ratio 16:9 strict */
-            background-color: #111; /* Fond gris très foncé le temps que Vimeo charge */
-            box-shadow: 0 15px 40px rgba(0,0,0,0.6); 
+            padding-bottom: 56.25%; /* Force le ratio 16:9 strict */
+            background-color: #050505; 
         }
         
         .item iframe { 
@@ -59,8 +57,7 @@
         @media (max-width: 900px) { 
             .mosaic-grid { 
                 grid-template-columns: 1fr; 
-                padding: 130px 20px 40px 20px;
-                gap: 30px;
+                padding: 180px 0 0 0; /* Dégage le menu sur mobile */
             } 
             .glitch { font-size: 3em; } 
         }
@@ -79,15 +76,6 @@
     </header>
 
     <div class="mosaic-grid">
-        <!-- L'attribut loading="lazy" empêche de faire planter la page au chargement -->
         <div class="item"><iframe src="https://player.vimeo.com/video/1222482193?title=0&byline=0&portrait=0" allow="autoplay; fullscreen" allowfullscreen loading="lazy"></iframe></div>
         <div class="item"><iframe src="https://player.vimeo.com/video/1208359948?title=0&byline=0&portrait=0" allow="autoplay; fullscreen" allowfullscreen loading="lazy"></iframe></div>
-        <div class="item"><iframe src="https://player.vimeo.com/video/1208359248?title=0&byline=0&portrait=0" allow="autoplay; fullscreen" allowfullscreen loading="lazy"></iframe></div>
-        <div class="item"><iframe src="https://player.vimeo.com/video/1208359340?title=0&byline=0&portrait=0" allow="autoplay; fullscreen" allowfullscreen loading="lazy"></iframe></div>
-        <div class="item"><iframe src="https://player.vimeo.com/video/1222482239?title=0&byline=0&portrait=0" allow="autoplay; fullscreen" allowfullscreen loading="lazy"></iframe></div>
-        <div class="item"><iframe src="https://player.vimeo.com/video/1222492930?title=0&byline=0&portrait=0" allow="autoplay; fullscreen" allowfullscreen loading="lazy"></iframe></div>
-        <div class="item"><iframe src="https://player.vimeo.com/video/1208359283?title=0&byline=0&portrait=0" allow="autoplay; fullscreen" allowfullscreen loading="lazy"></iframe></div>
-    </div>
-
-</body>
-</html>
+        <div class="item"><iframe src="https
