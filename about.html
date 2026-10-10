@@ -7,6 +7,16 @@
     <style>
         body, html { margin: 0; padding: 0; height: 100%; background: #000; color: #fff; font-family: 'Syne', sans-serif; overflow: hidden; }
         
+        /* Vidéo de fond de l'Index */
+        .video-container {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0;
+            filter: brightness(0.3);
+        }
+        .video-container iframe {
+            width: 100vw; height: 56.25vw; min-height: 100vh; min-width: 177.77vh; 
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); border: none;
+        }
+
         header { 
             position: absolute; top: 0; left: 0; width: 100%; text-align: center; padding: 40px 0; z-index: 999; 
             background: linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%); pointer-events: none; 
@@ -20,14 +30,18 @@
         nav a { color: white; text-decoration: none; margin: 0 15px; font-size: 1.2rem; font-weight: 800; transition: 0.3s; font-family: 'Syne', sans-serif; text-shadow: 0 2px 5px rgba(0,0,0,0.8); }
         nav a:hover { color: #ff0000; }
 
-        .about-wrapper { height: 100%; display: flex; align-items: center; justify-content: center; padding: 0 40px; }
-        .about-text { max-width: 800px; text-align: center; font-size: 1.5rem; line-height: 1.8; font-weight: 400; }
+        .about-wrapper { position: relative; z-index: 10; height: 100%; display: flex; align-items: center; justify-content: center; padding: 0 40px; }
+        .about-text { max-width: 800px; text-align: center; font-size: 1.5rem; line-height: 1.8; font-weight: 400; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
         .highlight { color: #ff0000; font-weight: 800; }
 
         @media (max-width: 768px) { .glitch { font-size: 3em; } .about-text { font-size: 1.1rem; } }
     </style>
 </head>
 <body>
+
+    <div class="video-container">
+        <iframe src="https://player.vimeo.com/video/1222492862?background=1&autoplay=1&loop=1&muted=1" allow="autoplay; fullscreen" allowfullscreen></iframe>
+    </div>
 
     <header>
         <h1 class="glitch" onclick="window.location.href='index.html'">PORTFOLIO</h1>
