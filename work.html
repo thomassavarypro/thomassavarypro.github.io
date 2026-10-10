@@ -5,16 +5,12 @@
     <title>Portfolio | Work</title>
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;800&display=swap" rel="stylesheet">
     <style>
-        body, html { margin: 0; padding: 0; height: 100%; background: #000; color: #fff; font-family: sans-serif; overflow: hidden; }
+        body, html { margin: 0; padding: 0; background: #000; color: #fff; font-family: 'Syne', sans-serif; overflow-x: hidden; }
         
         header { 
-            position: absolute; 
-            top: 0; left: 0; width: 100%;
-            text-align: center; 
-            padding: 40px 0; 
-            z-index: 999; 
-            background: linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%);
-            pointer-events: none; 
+            position: fixed; 
+            top: 0; left: 0; width: 100%; text-align: center; padding: 40px 0; z-index: 999; 
+            background: linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%); pointer-events: none; 
         }
         .glitch, nav a { pointer-events: auto; } 
         
@@ -25,70 +21,32 @@
         nav a { color: white; text-decoration: none; margin: 0 15px; font-size: 1.2rem; font-weight: 800; transition: 0.3s; font-family: 'Syne', sans-serif; text-shadow: 0 2px 5px rgba(0,0,0,0.8); }
         nav a:hover { color: #ff0000; }
 
-        .work-wrapper {
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
+        .mosaic-grid { 
+            display: grid; 
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 0; 
+            width: 100%; 
+            padding: 0; 
+            margin: 0;
+            padding-top: 150px; /* Décale la grille pour ne pas cacher la première ligne sous le header */
+        }
+        
+        .item { 
+            aspect-ratio: 16 / 9; 
+            position: relative; 
+            overflow: hidden; 
+            background-color: #000; 
+        }
+        
+        .item iframe { 
+            width: 100%; 
+            height: 100%; 
+            border: none; 
         }
 
-        .slider-viewport {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100vw;
-            gap: 20px;
-        }
-
-        .video-box {
-            aspect-ratio: 16 / 9;
-            background: #000;
-            transition: opacity 0.4s ease;
-        }
-
-        /* Le lecteur central prend désormais 85% de l'écran */
-        .video-box.main {
-            width: 85vw; 
-            flex-shrink: 0; 
-            opacity: 1;
-            z-index: 5;
-            box-shadow: 0 0 50px rgba(0,0,0,0.8);
-        }
-
-        /* Les vidéos sur les côtés sont plus discrètes (15%) pour laisser la place au central */
-        .video-box.side {
-            width: 15vw; 
-            flex-shrink: 0;
-            opacity: 0.2; 
-            pointer-events: none; 
-            z-index: 1;
-        }
-
-        iframe { width: 100%; height: 100%; border: none; }
-
-        .slide-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(0, 0, 0, 0.7);
-            color: #fff;
-            border: none;
-            font-size: 4rem;
-            padding: 20px 30px;
-            cursor: pointer;
-            z-index: 10;
-            transition: 0.3s;
-        }
-        .slide-btn:hover { color: #ff0000; background: rgba(0, 0, 0, 0.9); }
-        .prev-video { left: 10%; }
-        .next-video { right: 10%; }
-
-        @media (max-width: 1024px) {
-            .video-box.main { width: 100vw; }
-            .video-box.side { display: none; }
-            .prev-video { left: 10px; }
-            .next-video { right: 10px; }
+        @media (max-width: 768px) { 
+            .mosaic-grid { grid-template-columns: repeat(1, 1fr); padding-top: 120px;} 
+            .glitch { font-size: 3em; } 
         }
     </style>
 </head>
@@ -104,56 +62,15 @@
         </nav>
     </header>
 
-    <div class="work-wrapper">
-        <button class="slide-btn prev-video" onclick="moveVideo(-1)">&#10094;</button>
-        
-        <div class="slider-viewport">
-            <div class="video-box side">
-                <iframe id="video-left" src=""></iframe>
-            </div>
-            
-            <div class="video-box main">
-                <iframe id="video-player" src="" allow="autoplay; fullscreen" allowfullscreen></iframe>
-            </div>
-            
-            <div class="video-box side">
-                <iframe id="video-right" src=""></iframe>
-            </div>
-        </div>
-        
-        <button class="slide-btn next-video" onclick="moveVideo(1)">&#10095;</button>
+    <div class="mosaic-grid">
+        <div class="item"><iframe src="https://player.vimeo.com/video/1222482193?title=0&byline=0&portrait=0" allow="autoplay; fullscreen" allowfullscreen></iframe></div>
+        <div class="item"><iframe src="https://player.vimeo.com/video/1208359948?title=0&byline=0&portrait=0" allow="autoplay; fullscreen" allowfullscreen></iframe></div>
+        <div class="item"><iframe src="https://player.vimeo.com/video/1208359248?title=0&byline=0&portrait=0" allow="autoplay; fullscreen" allowfullscreen></iframe></div>
+        <div class="item"><iframe src="https://player.vimeo.com/video/1208359340?title=0&byline=0&portrait=0" allow="autoplay; fullscreen" allowfullscreen></iframe></div>
+        <div class="item"><iframe src="https://player.vimeo.com/video/1222482239?title=0&byline=0&portrait=0" allow="autoplay; fullscreen" allowfullscreen></iframe></div>
+        <div class="item"><iframe src="https://player.vimeo.com/video/1222492930?title=0&byline=0&portrait=0" allow="autoplay; fullscreen" allowfullscreen></iframe></div>
+        <div class="item"><iframe src="https://player.vimeo.com/video/1208359283?title=0&byline=0&portrait=0" allow="autoplay; fullscreen" allowfullscreen></iframe></div>
     </div>
-
-    <script>
-        const vimeoVideos = [
-            "https://player.vimeo.com/video/1222482193?title=0&byline=0&portrait=0",    
-            "https://player.vimeo.com/video/1208359948?title=0&byline=0&portrait=0", 
-            "https://player.vimeo.com/video/1208359248?title=0&byline=0&portrait=0", 
-            "https://player.vimeo.com/video/1208359340?title=0&byline=0&portrait=0", 
-            "https://player.vimeo.com/video/1222482239?title=0&byline=0&portrait=0",
-            "https://player.vimeo.com/video/1222492930?title=0&byline=0&portrait=0",
-            "https://player.vimeo.com/video/1208359283?title=0&byline=0&portrait=0"
-            
-        ];
-
-        let currentVideoIndex = 0;
-
-        function updateSlider() {
-            const leftIndex = (currentVideoIndex - 1 + vimeoVideos.length) % vimeoVideos.length;
-            const rightIndex = (currentVideoIndex + 1) % vimeoVideos.length;
-
-            document.getElementById('video-player').src = vimeoVideos[currentVideoIndex];
-            document.getElementById('video-left').src = vimeoVideos[leftIndex];
-            document.getElementById('video-right').src = vimeoVideos[rightIndex];
-        }
-
-        function moveVideo(direction) {
-            currentVideoIndex = (currentVideoIndex + direction + vimeoVideos.length) % vimeoVideos.length;
-            updateSlider();
-        }
-
-        window.onload = updateSlider;
-    </script>
 
 </body>
 </html>
