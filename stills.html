@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Portfolio | Stills</title>
+    <title>Thomas Marcucci | Stills</title>
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;800&display=swap" rel="stylesheet">
     <style>
         body { margin: 0; padding: 0; background: #000; color: #fff; font-family: sans-serif; overflow-x: hidden; }
@@ -41,7 +41,7 @@
 <body>
 
     <header>
-        <h1 class="glitch" onclick="window.location.href='index.html'">PORTFOLIO</h1>
+        <h1 class="glitch" onclick="window.location.href='index.html'">THOMAS MARCUCCI</h1>
         <nav>
             <a href="stills.html" style="color:gray;">STILLS</a>
             <a href="work.html">WORK</a>
@@ -113,7 +113,6 @@
         <div class="item"><img src="2.jpg" onclick="openLB('2.jpg')"></div>
     </div>
 
-    <!-- Le onclick appelle maintenant la fonction closeLB() pour arrêter le diaporama -->
     <div id="lightbox" onclick="closeLB()">
         <button class="nav-btn" style="left:20px;" onclick="changeImg(-1, event)">&#10094;</button>
         <img id="lb-img" src="">
@@ -123,18 +122,16 @@
     <script>
         const imgs = Array.from(document.querySelectorAll('.item img'));
         let current = 0;
-        let slideshowInterval; // Variable pour stocker le compteur
+        let slideshowInterval;
 
-        // Fonction pour démarrer ou relancer le diaporama automatique
         function startSlideshow() {
-            clearInterval(slideshowInterval); // Stoppe l'ancien compteur s'il y en a un
+            clearInterval(slideshowInterval);
             slideshowInterval = setInterval(() => {
-                current = (current + 1) % imgs.length; // Passe à l'image suivante
+                current = (current + 1) % imgs.length;
                 document.getElementById('lb-img').src = imgs[current].src;
-            }, 5000); // 5000 millisecondes = 5 secondes
+            }, 5000);
         }
 
-        // Fonction pour arrêter le diaporama
         function stopSlideshow() {
             clearInterval(slideshowInterval);
         }
@@ -143,10 +140,9 @@
             current = imgs.findIndex(img => img.src.includes(src));
             document.getElementById('lb-img').src = src;
             document.getElementById('lightbox').classList.add('active');
-            startSlideshow(); // Lance le diaporama à l'ouverture
+            startSlideshow();
         }
 
-        // Nouvelle fonction pour fermer la lightbox ET arrêter le compteur
         function closeLB() {
             document.getElementById('lightbox').classList.remove('active');
             stopSlideshow();
@@ -156,7 +152,7 @@
             e.stopPropagation();
             current = (current + n + imgs.length) % imgs.length;
             document.getElementById('lb-img').src = imgs[current].src;
-            startSlideshow(); // Relance le compteur à zéro pour laisser 2 secondes complètes après un clic manuel
+            startSlideshow();
         }
     </script>
 </body>
