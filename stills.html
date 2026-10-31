@@ -2,45 +2,77 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Thomas Marcucci | Stills</title>
+    <title>Thomas Savary | Stills</title>
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;800&display=swap" rel="stylesheet">
     <style>
-        body { margin: 0; padding: 0; background: #000; color: #fff; font-family: sans-serif; overflow-x: hidden; }
+        body, html { 
+            margin: 0; padding: 0; 
+            background: #000; color: #fff; 
+            font-family: 'Syne', sans-serif; 
+            overflow-x: hidden; 
+        }
         
         header { 
-            position: absolute; top: 0; left: 0; width: 100%; text-align: center; padding: 40px 0; z-index: 999; 
-            background: linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%); pointer-events: none; 
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            position: fixed; top: 0; left: 0; width: 100%; 
+            padding: 35px 0; z-index: 999; 
+            background: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%); 
+            pointer-events: none; 
+            display: flex; justify-content: center;
         }
-        
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            width: 320px;
+
+        .header-inner {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: stretch;
             pointer-events: auto;
         }
-
-        nav a { color: white; text-decoration: none; font-size: 1.2rem; font-weight: 800; transition: 0.3s; text-shadow: 0 2px 5px rgba(0,0,0,0.8); }
-        nav a:hover { color: #ff0000; }
-
+        
         .glitch { 
-            font-size: 2.15rem; 
+            font-family: 'Syne', sans-serif;
+            font-size: 2.2rem; 
             font-weight: 800; 
             text-transform: uppercase; 
+            white-space: nowrap;
             cursor: pointer; 
-            margin: 0 0 10px 0; 
+            margin: 0 0 12px 0; 
             color: #fff; 
             text-shadow: 0 4px 10px rgba(0,0,0,0.8);
             letter-spacing: 2px;
-            width: 320px;
-            pointer-events: auto;
+            text-align: center;
         }
         .glitch:hover { animation: glitch 0.3s infinite; }
-        @keyframes glitch { 0% { color: #fff; text-shadow: 2px 0 red; } 50% { color: #fff; text-shadow: -2px 0 cyan; } 100% { color: #fff; text-shadow: 2px 0 red; } }
+        @keyframes glitch { 
+            0% { color: #fff; text-shadow: 2px 0 red; } 
+            50% { color: #fff; text-shadow: -2px 0 cyan; } 
+            100% { color: #fff; text-shadow: 2px 0 red; } 
+        }
 
-        .mosaic-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; width: 100%; padding: 0; margin: 0; }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        nav a, nav a:visited { 
+            font-family: 'Syne', sans-serif;
+            color: #ffffff; 
+            text-decoration: none; 
+            font-size: 1.05rem; 
+            font-weight: 800; 
+            transition: color 0.3s ease; 
+            text-shadow: 0 2px 5px rgba(0,0,0,0.8); 
+        }
+        nav a:hover { color: #ff0000; }
+        nav a.active { color: #777777; }
+
+        .mosaic-grid { 
+            display: grid; 
+            grid-template-columns: repeat(5, 1fr); 
+            gap: 0; 
+            width: 100%; 
+            padding: 0; 
+            margin: 0; 
+        }
         
         .item { aspect-ratio: 4 / 3; position: relative; overflow: hidden; background-color: #000; }
         .item img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.06); transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); cursor: pointer; display: block; }
@@ -54,18 +86,22 @@
 
         @media (max-width: 768px) {
             .mosaic-grid { grid-template-columns: repeat(2, 1fr); }
+            .glitch { font-size: 1.5rem; }
+            nav a, nav a:visited { font-size: 0.85rem; }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <h1 class="glitch" onclick="window.location.href='index.html'">THOMAS MARCUCCI</h1>
-        <div class="nav-container">
-            <a href="stills.html" style="color:gray;">STILLS</a>
-            <a href="work.html">WORK</a>
-            <a href="about.html">ABOUT</a>
-            <a href="contact.html">CONTACT</a>
+        <div class="header-inner">
+            <h1 class="glitch" onclick="window.location.href='index.html'">THOMAS SAVARY</h1>
+            <nav>
+                <a href="stills.html" class="active">STILLS</a>
+                <a href="work.html">WORK</a>
+                <a href="about.html">ABOUT</a>
+                <a href="contact.html">CONTACT</a>
+            </nav>
         </div>
     </header>
 
@@ -148,7 +184,7 @@
             slideshowInterval = setInterval(() => {
                 current = (current + 1) % imgs.length;
                 document.getElementById('lb-img').src = imgs[current].src;
-            }, 5000);
+            }, 2000);
         }
 
         function stopSlideshow() {
@@ -168,11 +204,18 @@
         }
 
         function changeImg(n, e) {
-            e.stopPropagation();
+            if (e) e.stopPropagation();
             current = (current + n + imgs.length) % imgs.length;
             document.getElementById('lb-img').src = imgs[current].src;
             startSlideshow();
         }
+
+        document.addEventListener('keydown', (e) => {
+            if (!document.getElementById('lightbox').classList.contains('active')) return;
+            if (e.key === 'ArrowRight') changeImg(1);
+            if (e.key === 'ArrowLeft') changeImg(-1);
+            if (e.key === 'Escape') closeLB();
+        });
     </script>
 </body>
 </html>
