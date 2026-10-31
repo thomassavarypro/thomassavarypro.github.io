@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Portfolio | Work</title>
+    <title>Thomas Marcucci | Work</title>
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;800&display=swap" rel="stylesheet">
     <style>
         body, html { 
@@ -10,7 +10,7 @@
             background: #000; color: #fff; 
             font-family: 'Syne', sans-serif; 
             overflow-x: hidden; 
-            overflow-y: auto; /* Sécurise le défilement de la page */
+            overflow-y: auto;
         }
         
         header { 
@@ -30,17 +30,17 @@
         .mosaic-grid { 
             display: grid; 
             grid-template-columns: repeat(2, 1fr); 
-            gap: 0; /* Lecteurs collés */
+            gap: 0;
             width: 100%; 
             margin: 0; 
-            padding: 220px 0 0 0; /* Vidéos descendues pour dégager le menu */
+            padding: 220px 0 0 0;
             box-sizing: border-box;
         }
         
         .item { 
             position: relative; 
             width: 100%;
-            padding-bottom: 56.25%; /* Ratio 16:9 forcé */
+            padding-bottom: 56.25%;
             background-color: #050505; 
         }
         
@@ -66,7 +66,7 @@
 <body>
 
     <header>
-        <h1 class="glitch" onclick="window.location.href='index.html'">PORTFOLIO</h1>
+        <h1 class="glitch" onclick="window.location.href='index.html'">THOMAS MARCUCCI</h1>
         <nav>
             <a href="stills.html">STILLS</a>
             <a href="work.html" style="color:gray;">WORK</a>
@@ -76,7 +76,6 @@
     </header>
 
     <div class="mosaic-grid">
-        <!-- L'attribut loading="lazy" a été supprimé pour forcer l'affichage immédiat -->
         <div class="item"><iframe src="https://player.vimeo.com/video/1222482193?title=0&byline=0&portrait=0" allow="autoplay; fullscreen" allowfullscreen></iframe></div>
         <div class="item"><iframe src="https://player.vimeo.com/video/1208359948?title=0&byline=0&portrait=0" allow="autoplay; fullscreen" allowfullscreen></iframe></div>
         <div class="item"><iframe src="https://player.vimeo.com/video/1236164449?title=0&byline=0&portrait=0" allow="autoplay; fullscreen" allowfullscreen></iframe></div>
