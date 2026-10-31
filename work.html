@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Thomas Marcucci | Work</title>
+    <title>Thomas Savary | Work</title>
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;800&display=swap" rel="stylesheet">
     <style>
         body, html { 
@@ -14,37 +14,57 @@
         }
         
         header { 
-            position: fixed; top: 0; left: 0; width: 100%; text-align: center; padding: 40px 0; z-index: 999; 
-            background: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%); pointer-events: none; 
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            position: fixed; top: 0; left: 0; width: 100%; 
+            padding: 35px 0; z-index: 999; 
+            background: linear-gradient(to bottom, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0) 100%); 
+            pointer-events: none; 
+            display: flex; justify-content: center;
         }
-        
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            width: 320px;
+
+        .header-inner {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: stretch;
             pointer-events: auto;
         }
-
-        nav a { color: white; text-decoration: none; font-size: 1.2rem; font-weight: 800; transition: 0.3s; text-shadow: 0 2px 5px rgba(0,0,0,0.8); }
-        nav a:hover { color: #ff0000; }
-
+        
         .glitch { 
-            font-size: 2.15rem; 
+            font-family: 'Syne', sans-serif;
+            font-size: 2.2rem; 
             font-weight: 800; 
             text-transform: uppercase; 
+            white-space: nowrap;
             cursor: pointer; 
-            margin: 0 0 10px 0; 
+            margin: 0 0 12px 0; 
             color: #fff; 
             text-shadow: 0 4px 10px rgba(0,0,0,0.8);
             letter-spacing: 2px;
-            width: 320px;
-            pointer-events: auto;
+            text-align: center;
         }
         .glitch:hover { animation: glitch 0.3s infinite; }
-        @keyframes glitch { 0% { color: #fff; text-shadow: 2px 0 red; } 50% { color: #fff; text-shadow: -2px 0 cyan; } 100% { color: #fff; text-shadow: 2px 0 red; } }
+        @keyframes glitch { 
+            0% { color: #fff; text-shadow: 2px 0 red; } 
+            50% { color: #fff; text-shadow: -2px 0 cyan; } 
+            100% { color: #fff; text-shadow: 2px 0 red; } 
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        nav a, nav a:visited { 
+            font-family: 'Syne', sans-serif;
+            color: #ffffff; 
+            text-decoration: none; 
+            font-size: 1.05rem; 
+            font-weight: 800; 
+            transition: color 0.3s ease; 
+            text-shadow: 0 2px 5px rgba(0,0,0,0.8); 
+        }
+        nav a:hover { color: #ff0000; }
+        nav a.active { color: #777777; }
 
         .mosaic-grid { 
             display: grid; 
@@ -52,7 +72,7 @@
             gap: 0;
             width: 100%; 
             margin: 0; 
-            padding: 220px 0 0 0;
+            padding: 150px 0 0 0;
             box-sizing: border-box;
         }
         
@@ -76,20 +96,24 @@
         @media (max-width: 900px) { 
             .mosaic-grid { 
                 grid-template-columns: 1fr; 
-                padding: 180px 0 0 0; 
-            } 
+                padding: 130px 0 0 0; 
+            }
+            .glitch { font-size: 1.5rem; }
+            nav a, nav a:visited { font-size: 0.85rem; }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <h1 class="glitch" onclick="window.location.href='index.html'">THOMAS MARCUCCI</h1>
-        <div class="nav-container">
-            <a href="stills.html">STILLS</a>
-            <a href="work.html" style="color:gray;">WORK</a>
-            <a href="about.html">ABOUT</a>
-            <a href="contact.html">CONTACT</a>
+        <div class="header-inner">
+            <h1 class="glitch" onclick="window.location.href='index.html'">THOMAS SAVARY</h1>
+            <nav>
+                <a href="stills.html">STILLS</a>
+                <a href="work.html" class="active">WORK</a>
+                <a href="about.html">ABOUT</a>
+                <a href="contact.html">CONTACT</a>
+            </nav>
         </div>
     </header>
 
